@@ -51,6 +51,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     TweetsAdapter tweetsAdapter;
     long maxId = 0;
+    ArrayList<Tweet> newTweets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,13 +151,9 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     private void getDefaultTimeline() {
+        this.maxId = 0;
         getTimelineData(0, 25);
-//        tweetArrayList.clear();
-//        tweetsAdapter.notifyItemRangeRemoved(0, 25);
-//        rvTweets.smoothScrollToPosition(0);
     }
-
-    ArrayList<Tweet> newTweets;
 
     private void getTimelineData(final long maxId, int totalItemsCount) {
         try {
