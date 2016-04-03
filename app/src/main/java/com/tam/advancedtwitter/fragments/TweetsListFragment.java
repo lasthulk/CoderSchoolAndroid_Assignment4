@@ -25,19 +25,20 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 
 public abstract class TweetsListFragment extends Fragment {
+    protected static TwitterClient client;
+    private static LinearLayoutManager linearLayout;
 
-    protected String TAG = TweetsListFragment.class.getSimpleName();
-    protected static ArrayList<Tweet> tweetArrayList = new ArrayList<>();
     @Bind(R.id.rvTweets)
     RecyclerView rvTweets;
     @Bind(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-    protected static TwitterClient client;
-    TweetsAdapter tweetsAdapter;
-    private static LinearLayoutManager linearLayout;
 
-    protected static long maxId = 0;
-    protected static ArrayList<Tweet> newTweets;
+    protected String TAG = TweetsListFragment.class.getSimpleName();
+    protected ArrayList<Tweet> tweetArrayList = new ArrayList<>();
+    protected long maxId = 0;
+    protected ArrayList<Tweet> newTweets;
+    TweetsAdapter tweetsAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public abstract class TweetsListFragment extends Fragment {
                     maxId = tweetArrayList.get(tweetArrayList.size() - 1).getUid();
                 }
                 Log.d(TAG, "onLoadMore: " + String.valueOf(page));
-                getTimelineData(maxId, totalItemsCount);
+                getMoreData(maxId, totalItemsCount);
             }
         });
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,7 +84,7 @@ public abstract class TweetsListFragment extends Fragment {
         return view;
     }
 
-    public abstract void getTimelineData(long maxId, int totalItemsCount);
+    public abstract void getMoreData(long maxId, int totalItemsCount);
 
     public abstract void getDefaultTimeline();
 }

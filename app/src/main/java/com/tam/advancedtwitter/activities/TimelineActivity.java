@@ -1,15 +1,27 @@
 package com.tam.advancedtwitter.activities;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.twitter.R;
+import com.tam.advancedtwitter.adapters.TweetsFragmentPagerAdapter;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 //import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = TimelineActivity.class.getSimpleName();
+
+    @Bind(R.id.tabsStrip)
+    PagerSlidingTabStrip tabsStrip;
+
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,35 +29,10 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //ButterKnife.bind(this);
-        initComponents();
-        //homeTimeLineFragment.getDefaultTimeline();
-        //getDefaultTimeline();
+        ButterKnife.bind(this);
+
+        viewPager.setAdapter(new TweetsFragmentPagerAdapter(getSupportFragmentManager()));
+        tabsStrip.setViewPager(viewPager);
     }
 
-    private void initComponents() {
-//        if (savedInstanceState != null) {
-//            homeTimeLineFragment = (HomeTimeLineFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentTimeline);
-//        }
-//        rvTweets.setHasFixedSize(true);
-//        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-//                startActivityForResult(i, CREATE_TWEET_CODE);
-//            }
-//        });
-    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CREATE_TWEET_CODE && resultCode == RESULT_OK) {
-//            User user = (User) Parcels.unwrap(data.getParcelableExtra("user"));
-//            String tweetContent = data.getStringExtra("tweetConent");
-//            final Tweet newTweet = new Tweet();
-//            newTweet.setUser(user);
-//            newTweet.setBody(tweetContent);
-//            //homeTimeLineFragment.postNewTweet(newTweet);
-//        }
-//    }
 }

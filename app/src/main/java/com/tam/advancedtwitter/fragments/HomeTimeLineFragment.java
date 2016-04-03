@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.tam.advancedtwitter.activities.ComposeActivity;
 import com.tam.advancedtwitter.helpers.NetworkHelper;
 import com.tam.advancedtwitter.models.Tweet;
 import com.tam.advancedtwitter.models.User;
@@ -37,22 +36,54 @@ public class HomeTimeLineFragment extends TweetsListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        //View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
         ButterKnife.bind(this, view);
-        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-                Intent i = new Intent(getActivity(), ComposeActivity.class);
-                startActivityForResult(i, CREATE_TWEET_CODE);
-            }
-        });
+//        rvTweets.setItemAnimator(new SlideInUpAnimator());
+//        tweetsAdapter = new TweetsAdapter(tweetArrayList);
+//        rvTweets.setAdapter(tweetsAdapter);
+//        this.client = TwitterApplication.getRestClient();
+//
+//        linearLayout = new LinearLayoutManager(getActivity());
+//        linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
+//        linearLayout.scrollToPosition(0);
+//        rvTweets.setLayoutManager(linearLayout);
+//        // Configure the refreshing colors
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+//        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayout) {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount) {
+//                if (tweetArrayList.size() > 0) {
+//                    maxId = tweetArrayList.get(tweetArrayList.size() - 1).getUid();
+//                }
+//                Log.d(TAG, "onLoadMore: " + String.valueOf(page));
+//                getMoreData(maxId, totalItemsCount);
+//            }
+//        });
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                getDefaultTimeline();
+//            }
+//        });
+//        getDefaultTimeline();
+//        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+//                Intent i = new Intent(getActivity(), ComposeActivity.class);
+//                startActivityForResult(i, CREATE_TWEET_CODE);
+//            }
+//        });
         return view;
     }
 
     @Override
-    public void getTimelineData(long maxId, int totalItemsCount) {
+    public void getMoreData(long maxId, int totalItemsCount) {
         try {
             if (!NetworkHelper.isOnline()) {
                 Toast.makeText(getActivity(), "Cannot connect to Internet", Toast.LENGTH_SHORT).show();
@@ -88,7 +119,7 @@ public class HomeTimeLineFragment extends TweetsListFragment {
     @Override
     public void getDefaultTimeline() {
         this.maxId = 0;
-        getTimelineData(0, 25);
+        getMoreData(0, 25);
     }
 
     private void postNewTweet(final Tweet newTweet) {
