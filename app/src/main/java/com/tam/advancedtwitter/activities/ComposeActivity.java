@@ -74,6 +74,8 @@ public class ComposeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
+        tvComposeName.setText("");
+        tvComposeUserName.setText("");
         maxLengthTweet = getResources().getInteger(R.integer.max_length_tweet);
         this.client = TwitterApplication.getRestClient();
     }
@@ -139,8 +141,8 @@ public class ComposeActivity extends AppCompatActivity {
         if (currentUser == null || TextUtils.isEmpty(currentUser.getProfileImageUrl())) {
             return;
         }
-        tvComposeUserName.setText(currentUser.getScreenName());
-        tvComposeName.setText(currentUser.getName());
+        tvComposeUserName.setText(currentUser.getFormatingScreenName());
+        tvComposeName.setText(currentUser.getFullName());
         Context context = ivComposeProfileImage.getContext();
         Glide.with(context).load(currentUser.getProfileImageUrl())
                 .fitCenter()

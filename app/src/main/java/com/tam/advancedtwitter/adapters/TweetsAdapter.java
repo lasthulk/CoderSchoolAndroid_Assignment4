@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.twitter.R;
-import com.tam.advancedtwitter.models.Tweet;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.tam.advancedtwitter.models.Media;
+import com.tam.advancedtwitter.models.Tweet;
 
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewH
         @Bind(R.id.tvTimeStamp)
         TextView tvTimeStamp;
 
+        @Bind(R.id.ivThumbnailImage)
+        ImageView ivThumbnailImage;
+
         public TweetViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -63,14 +68,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewH
     public void onBindViewHolder(TweetViewHolder holder, int position) {
         Tweet tweet = this.tweets.get(position);
         holder.tvBody.setText(tweet.getBody());
-        holder.tvUserName.setText(tweet.getUser().getScreenName());
+        holder.tvUserName.setText(tweet.getUser().getFormatingScreenName());
         holder.tvTimeStamp.setText(tweet.getCreatedAt());
         Context context = holder.ivProfileImage.getContext();
         Glide.with(context).load(tweet.getUser().getProfileImageUrl())
                 .fitCenter()
                 .centerCrop()
                 .into(holder.ivProfileImage);
+        Media media = tweet.getMedia();
+        if (media != null) {
 
+            String thumbmail = media.getThumbnailImage();
+            if (!thumbmail.isEmpty()) {
+                Glide.with(context).load(thumbmail)
+                        .fitCenter()
+                        .into(holder.ivThumbnailImage);
+            }
+        }
     }
 
     @Override

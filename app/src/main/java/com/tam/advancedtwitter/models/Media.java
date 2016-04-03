@@ -1,7 +1,5 @@
 package com.tam.advancedtwitter.models;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,6 +14,7 @@ public class Media {
     public String getGetMediaType() {
         return mediaType;
     }
+
     public String getThumbnailImage() {
         return thumbnailImage;
     }
@@ -27,6 +26,7 @@ public class Media {
     public Media() {
         this.thumbnailImage = "";
         this.videoUrl = "";
+        this.mediaType = "";
     }
 
     public static Media getMedia(JSONObject extendedEntities) {
@@ -38,11 +38,11 @@ public class Media {
                     JSONObject mediaObject = mediaArray.optJSONObject(0);
                     String mediaUrl = mediaObject.getString("media_url");
                     if (mediaUrl != null && !mediaUrl.isEmpty()) {
-                        Log.d("media_url", "media_url: " + mediaUrl);
                         media.thumbnailImage = mediaUrl;
-                    } else {
-                        Log.d("media_url", "No media_url ");
                     }
+//                    else {
+//                        Log.d("media_url", "No media_url ");
+//                    }
                     JSONObject videoObject = mediaObject.optJSONObject("video_info");
                     if (videoObject != null) {
                         JSONArray variants = videoObject.optJSONArray("variants");
@@ -51,7 +51,7 @@ public class Media {
                                 JSONObject curVariant = variants.getJSONObject(i);
                                 if (curVariant.getString("content_type").equals("video/mp4")) {
                                     media.videoUrl = curVariant.getString("url");
-                                    Log.d("video_url", "video_url: " + media.videoUrl);
+//                                    Log.d("video_url", "video_url: " + media.videoUrl);
                                     break;
                                 }
                             }
@@ -64,6 +64,6 @@ public class Media {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return  null;
+        return media;
     }
 }

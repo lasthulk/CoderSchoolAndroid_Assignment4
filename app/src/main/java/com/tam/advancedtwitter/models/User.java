@@ -15,10 +15,25 @@ public class User {
     long uid;
     String screenName;
     String profileImageUrl;
+    String description;
+    int followersCount;
+    int followingsCount;
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowingsCount() {
+        return followingsCount;
+    }
+
+    public String getProfileDescription() {
+        return description;
+    }
 
     public User() {
     }
-    public String getName() {
+    public String getFullName() {
         return name;
     }
 
@@ -26,8 +41,12 @@ public class User {
         return uid;
     }
 
+    public String getFormatingScreenName() {
+        return AT_CHAR + screenName;
+    }
+
     public String getScreenName() {
-        return screenName;
+        return  this.screenName;
     }
 
     public String getProfileImageUrl() {
@@ -39,8 +58,11 @@ public class User {
         try {
             u.name = jsonObject.getString("name");
             u.uid = jsonObject.getLong("id");
-            u.screenName = AT_CHAR + jsonObject.getString("screen_name");
+            u.screenName = jsonObject.getString("screen_name");
             u.profileImageUrl = jsonObject.getString("profile_image_url");
+            u.description = jsonObject.getString("description");
+            u.followersCount = jsonObject.getInt("followers_count");
+            u.followingsCount = jsonObject.getInt("friends_count");
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

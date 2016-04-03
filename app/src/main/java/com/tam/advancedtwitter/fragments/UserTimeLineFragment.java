@@ -15,15 +15,27 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import butterknife.ButterKnife;
+/**
+ * Created by toan on 4/3/2016.
+ */
+public class UserTimeLineFragment extends TweetsListFragment {
 
-public class MentionsTimeLineFragment extends TweetsListFragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, view);
-        return view;
+//        View view = super.onCreateView(inflater, container, savedInstanceState);
+//        ButterKnife.bind(this, view);
+//        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    public static UserTimeLineFragment newInstance(String screenName) {
+        UserTimeLineFragment userFragment = new UserTimeLineFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("screen_name", screenName);
+        userFragment.setArguments(bundle);
+        return userFragment;
     }
 
     @Override
@@ -36,17 +48,12 @@ public class MentionsTimeLineFragment extends TweetsListFragment {
             if (maxId == 0) {
                 tweetsAdapter.clear();
             }
-            this.client.getMentionsTimeline(maxId, new JsonHttpResponseHandler() {
-                @Override
+            String screenName = getArguments().getString("screen_name");
+            this.client.getUserTimeline(maxId, screenName, new JsonHttpResponseHandler() {
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                    try {
-
-                        newTweets = Tweet.fromJSONArray(response);
-                        tweetsAdapter.addAll(newTweets);
-                        swipeContainer.setRefreshing(false);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    newTweets = Tweet.fromJSONArray(response);
+                    tweetsAdapter.addAll(newTweets);
+                    swipeContainer.setRefreshing(false);
                 }
 
                 @Override

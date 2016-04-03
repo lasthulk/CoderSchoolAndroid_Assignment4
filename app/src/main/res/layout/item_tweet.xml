@@ -50,4 +50,13 @@
         android:layout_alignStart="@+id/tvUserName"
         android:linksClickable="true"
         android:autoLink="all" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivThumbnailImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignRight="@+id/tvTimeStamp"
+        android:layout_alignEnd="@+id/tvTimeStamp"/>
 </RelativeLayout>
