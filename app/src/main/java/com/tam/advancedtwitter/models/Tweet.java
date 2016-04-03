@@ -1,7 +1,5 @@
 package com.tam.advancedtwitter.models;
 
-import android.util.Log;
-
 import com.tam.advancedtwitter.helpers.TimeHelper;
 
 import org.json.JSONArray;
@@ -18,11 +16,8 @@ public class Tweet {
     private long uid;
     private User user;
     private String createdAt;
-    private String mediaUrl;
-
-    public String getMediaUrl() {
-        return mediaUrl;
-    }
+    private Media media;
+    public Media getMedia() { return media; }
 
     public String getBody() {
         return body;
@@ -48,6 +43,8 @@ public class Tweet {
         this.user = user;
     }
 
+
+
     public static Tweet fromJson(JSONObject jsonObject) {
         Tweet t = new Tweet();
         try {
@@ -55,26 +52,19 @@ public class Tweet {
             t.uid = jsonObject.getLong("id");
             t.createdAt = TimeHelper.getTwitterRelativeTimeAgo(jsonObject.getString("created_at"));
             t.user = User.fromJson(jsonObject.getJSONObject("user"));
-            JSONObject entitiesObject = jsonObject.optJSONObject("entities");
-            if (entitiesObject != null) {
-                JSONArray mediaArray = entitiesObject.optJSONArray("media");
-                if (mediaArray != null && mediaArray.length() > 0) {
-                    String mediaUrl = mediaArray.optJSONObject(0).getString("media_url");
-                    if (mediaUrl != null && !mediaUrl.isEmpty()) {
-                        Log.d("media_url", "media_url: " + mediaUrl);
-                    } else {
-                        Log.d("media_url", "No media_url ");
-                    }
-                }
-            }
-//            JSONObject mediaObject = jsonObject.optJSONObject("entities").optJSONArray("media").optJSONObject(0);
-//            if (mediaObject != null) {
-//                String mediaUrl = mediaObject.getString("media_url");
-//                if (mediaUrl != null && !mediaUrl.isEmpty()) {
-//                    Log.d("media_url", "media_url: " + mediaUrl);
+            JSONObject entitiesObject = jsonObject.optJSONObject("extended_entities");
+//            if (entitiesObject != null) {
+//                JSONArray mediaArray = entitiesObject.optJSONArray("media");
+//                if (mediaArray != null && mediaArray.length() > 0) {
+//                    String thumbnailImage = mediaArray.optJSONObject(0).getString("media_url");
+//                    if (thumbnailImage != null && !thumbnailImage.isEmpty()) {
+//                        Log.d("media_url", "media_url: " + thumbnailImage);
+//                    } else {
+//                        Log.d("media_url", "No media_url ");
+//                    }
 //                }
 //            }
-
+            t.media = Media.getMedia(entitiesObject);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

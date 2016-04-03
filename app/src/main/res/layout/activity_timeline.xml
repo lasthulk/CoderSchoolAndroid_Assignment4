@@ -22,23 +22,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_timeline" />
-
     <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/bnCompose"-->
+        <!--android:id="@+id/bnOpenCompose"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_gravity="bottom|end"-->
         <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:src="@android:drawable/ic_input_add"-->
-        <!--android:background="#55acee"-->
-        <!--android:scaleType="centerInside"/>-->
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/bnOpenCompose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/blueTwitter"
-        android:src="@drawable/ic_plus_white_36dp" />
+        <!--app:backgroundTint="@color/blueTwitter"-->
+        <!--android:src="@drawable/ic_plus_white_36dp" />-->
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -28,6 +28,8 @@ dependencies {
     // Picasso for remote image loading
     // Android Async Http for sending async network requests
     // ActiveAndroid for simple persistence with an ORM
+    apt 'org.parceler:parceler:1.0.4'
+
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'jp.wasabeef:recyclerview-animators:2.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -40,6 +42,4 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.parceler:parceler-api:1.0.4'
-    apt 'org.parceler:parceler:1.0.4'
-
 }
