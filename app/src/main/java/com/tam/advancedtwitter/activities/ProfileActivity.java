@@ -55,8 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         screenName = getIntent().getStringExtra("my_screen_name");
         this.client = TwitterApplication.getRestClient();
-        client.getCurrentUser(new JsonHttpResponseHandler() {
-            @Override
+        //client.getCurrentUser(new JsonHttpResponseHandler() {
+        client.getUserInfo(screenName, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJson(response);
                 getSupportActionBar().setTitle(user.getFormatingScreenName());

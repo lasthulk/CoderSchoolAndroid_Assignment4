@@ -23,6 +23,8 @@
         android:id="@+id/tabsStrip"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
+        app:pstsUnderlineColor="@color/blueTwitter"
+        app:pstsIndicatorColor="@color/blueTwitter"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true" />
