@@ -34,21 +34,15 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public abstract class TweetsListFragment extends Fragment {
     protected static TwitterClient client;
     private static LinearLayoutManager linearLayout;
-    protected static final int CREATE_TWEET_CODE = 305;
     @Bind(R.id.rvTweets)
     RecyclerView rvTweets;
     @Bind(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-
-
     protected String TAG = TweetsListFragment.class.getSimpleName();
     protected ArrayList<Tweet> tweetArrayList = new ArrayList<>();
     protected long maxId = 0;
     protected ArrayList<Tweet> newTweets;
     protected TweetsAdapter tweetsAdapter;
-
-    protected JsonHttpResponseHandler fetchTweets;
-    protected JsonHttpResponseHandler fetchMoreTweets;
 
     public void postNewTweet(final Tweet newTweet) {
         if (!NetworkHelper.isOnline()) {
@@ -90,23 +84,6 @@ public abstract class TweetsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.client = TwitterApplication.getRestClient();
-
-//        this.fetchTweets = new JsonHttpResponseHandler() {
-//
-//        };
-//
-//        this.fetchMoreTweets = new JsonHttpResponseHandler() {
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                newTweets = Tweet.fromJSONArray(response);
-//                tweetsAdapter.addAll(newTweets);
-//                swipeContainer.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                Log.d(TAG, "onFailure: " + errorResponse.toString());
-//            }
-//        };
     }
 
     @Override
@@ -125,9 +102,6 @@ public abstract class TweetsListFragment extends Fragment {
         rvTweets.setItemAnimator(new SlideInUpAnimator());
         tweetsAdapter = new TweetsAdapter(tweetArrayList);
         rvTweets.setAdapter(tweetsAdapter);
-
-
-
         linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayout.scrollToPosition(0);
         rvTweets.setLayoutManager(linearLayout);
@@ -152,29 +126,8 @@ public abstract class TweetsListFragment extends Fragment {
                 getDefaultTimeline();
             }
         });
-//        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//            public void onClick(View view) {
-//                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-//                Intent i = new Intent(getActivity(), ComposeActivity.class);
-//                startActivityForResult(i, CREATE_TWEET_CODE);
-//            }
-//        });
         getDefaultTimeline();
     }
-
-    //    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CREATE_TWEET_CODE && resultCode == Activity.RESULT_OK) {
-//            User user = (User) Parcels.unwrap(data.getParcelableExtra("user"));
-//            String tweetContent = data.getStringExtra("tweetConent");
-//            final Tweet newTweet = new Tweet();
-//            newTweet.setUser(user);
-//            newTweet.setBody(tweetContent);
-//            postNewTweet(newTweet);
-//        }
-//    }
-
 
     public abstract void getMoreData(long maxId, int totalItemsCount);
 

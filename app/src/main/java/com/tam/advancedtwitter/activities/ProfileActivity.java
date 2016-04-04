@@ -43,13 +43,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Bind(R.id.tvProfileFollowing)
     TextView tvProfileFollowing;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         ButterKnife.bind(this);
+        screenName = getIntent().getStringExtra("my_screen_name");
         this.client = TwitterApplication.getRestClient();
         client.getCurrentUser(new JsonHttpResponseHandler() {
             @Override
@@ -57,6 +61,13 @@ public class ProfileActivity extends AppCompatActivity {
                 user = User.fromJson(response);
                 getSupportActionBar().setTitle(user.getFormatingScreenName());
                 displayHeaderInformation(user);
+//                screenName = user.getScreenName();
+//                UserTimeLineFragment userFragment = UserTimeLineFragment.newInstance(screenName);
+//                // display a user fragment within a activity dynamically
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                ft.replace(R.id.flContainer, userFragment);
+//                ft.commit();
+
             }
 
             @Override
@@ -64,8 +75,11 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d("getCurrentUser", "onFailure: " + responseString);
             }
         });
-        //screenName = user.getScreenName();
-        if (savedInstanceState != null) {
+
+        Log.d("Check screenName", "screenName: " + screenName);
+        String viewType = getIntent().getStringExtra("whoview");
+        if (savedInstanceState == null) {
+            Log.d("savedInstanceState", "savedInstanceState");
             UserTimeLineFragment userFragment = UserTimeLineFragment.newInstance(screenName);
             // display a user fragment within a activity dynamically
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -76,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void displayHeaderInformation(User user) {
         tvProfileFollower.setText(user.getFollowersCount() + " Follower(s)");
-        tvProfileFollowing.setText(user.getFollowingsCount() + "Following");
+        tvProfileFollowing.setText(user.getFollowingsCount() + " Following");
         tvProfileFullName.setText(user.getFullName());
         tvProfileDescription.setText(user.getProfileDescription());
         Glide.with(this).load(user.getProfileImageUrl())

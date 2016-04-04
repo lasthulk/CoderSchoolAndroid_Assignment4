@@ -14,14 +14,6 @@ import org.json.JSONObject;
 
 public class MentionsTimeLineFragment extends TweetsListFragment {
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View view = super.onCreateView(inflater, container, savedInstanceState);
-//        ButterKnife.bind(this, view);
-//        return view;
-//    }
-
-
     public static MentionsTimeLineFragment newInstance(String screenName) {
         MentionsTimeLineFragment mentionsTimeLineFragment = new MentionsTimeLineFragment();
         Bundle bundle = new Bundle();

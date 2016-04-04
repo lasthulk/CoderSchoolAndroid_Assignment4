@@ -1,6 +1,7 @@
 package com.tam.advancedtwitter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.twitter.R;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.tam.advancedtwitter.activities.ProfileActivity;
 import com.tam.advancedtwitter.models.Media;
 import com.tam.advancedtwitter.models.Tweet;
 
@@ -55,19 +57,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewH
 
     @Override
     public TweetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
         View viewItemTweet = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
         TweetViewHolder holder = new TweetViewHolder(viewItemTweet);
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        Tweet tweet = this.tweets.get(position);
+        final Tweet tweet = this.tweets.get(position);
         holder.tvBody.setText(tweet.getBody());
         holder.tvUserName.setText(tweet.getUser().getFormatingScreenName());
         holder.tvTimeStamp.setText(tweet.getCreatedAt());
-        Context context = holder.ivProfileImage.getContext();
+        final Context context = holder.ivProfileImage.getContext();
         Glide.with(context).load(tweet.getUser().getProfileImageUrl())
                 .fitCenter()
                 .centerCrop()
@@ -87,6 +90,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewH
         } else {
             holder.ivThumbnailImage.setVisibility(View.GONE);
         }
+        holder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(context, ProfileActivity.class);
+                i.putExtra("my_screen_name", String.valueOf(tweet.getUser().getScreenName()));
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

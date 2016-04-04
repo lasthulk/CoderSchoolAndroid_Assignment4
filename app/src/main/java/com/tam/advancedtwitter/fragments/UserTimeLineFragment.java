@@ -43,6 +43,7 @@ public class UserTimeLineFragment extends TweetsListFragment {
                 tweetsAdapter.clear();
             }
             String screenName = getArguments().getString("screen_name");
+            Log.d(TAG, "screenName from getMoreData: " + screenName);
             this.client.getUserTimeline(maxId, screenName, new JsonHttpResponseHandler() {
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     newTweets = Tweet.fromJSONArray(response);
