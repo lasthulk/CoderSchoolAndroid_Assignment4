@@ -2,18 +2,12 @@ package com.tam.advancedtwitter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
 import com.codepath.apps.twitter.R;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.tam.advancedtwitter.models.User;
-import com.tam.advancedtwitter.network.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
+import com.tam.advancedtwitter.network.TwitterClient;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
@@ -56,18 +50,4 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         getClient().connect();
     }
 
-    private void getUser() {
-        Intent data = getIntent();
-        getClient().getCurrentUser(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                User currentUser = User.fromJson(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, "onFailure: " + errorResponse.toString());
-            }
-        });
-    }
 }
