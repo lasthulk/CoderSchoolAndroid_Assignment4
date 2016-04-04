@@ -8,14 +8,14 @@ import com.tam.advancedtwitter.fragments.HomeTimeLineFragment;
 import com.tam.advancedtwitter.fragments.MentionsTimeLineFragment;
 
 
-public class TweetsFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {//} implements PagerSlidingTabStrip.IconTabProvider { //FragmentPagerAdapter {
-    private int tabIcons[] = {R.drawable.ic_home_white_24dp, R.drawable.ic_at_white_24dp };
+public class TweetsFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {  //implements PagerSlidingTabStrip.IconTabProvider  {
+    private int tabIcons[] = {R.drawable.ic_home_grey600_24dp, R.drawable.ic_at_grey600_24dp };
     private String tabTitles[] = { "Home", "Mentions" };
 
     public TweetsFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
-//
+
 //    @Override
 //    public int getPageIconResId(int position) {
 //        return tabIcons[position];
@@ -24,7 +24,6 @@ public class TweetsFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            //return new HomeTimeLineFragment();
             return HomeTimeLineFragment.newInstance("");
         } else if (position == 1) {
             return MentionsTimeLineFragment.newInstance("");
@@ -41,4 +40,6 @@ public class TweetsFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {
     public int getCount() {
         return tabTitles.length;
     }
+
+
 }

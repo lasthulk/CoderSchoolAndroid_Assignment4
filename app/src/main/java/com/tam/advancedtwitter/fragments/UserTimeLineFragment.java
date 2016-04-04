@@ -14,16 +14,6 @@ import org.json.JSONObject;
 
 public class UserTimeLineFragment extends TweetsListFragment {
 
-
-
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-////        View view = super.onCreateView(inflater, container, savedInstanceState);
-////        ButterKnife.bind(this, view);
-////        return view;
-//        return super.onCreateView(inflater, container, savedInstanceState);
-//    }
-
     public static UserTimeLineFragment newInstance(String screenName) {
         UserTimeLineFragment userFragment = new UserTimeLineFragment();
         Bundle bundle = new Bundle();

@@ -15,55 +15,6 @@ import org.json.JSONObject;
 
 public class HomeTimeLineFragment extends TweetsListFragment {
 
-
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        //View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
-//        View view = super.onCreateView(inflater, container, savedInstanceState);
-//        ButterKnife.bind(this, view);
-//        rvTweets.setItemAnimator(new SlideInUpAnimator());
-//        tweetsAdapter = new TweetsAdapter(tweetArrayList);
-//        rvTweets.setAdapter(tweetsAdapter);
-//        this.client = TwitterApplication.getRestClient();
-//
-//        linearLayout = new LinearLayoutManager(getActivity());
-//        linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
-//        linearLayout.scrollToPosition(0);
-//        rvTweets.setLayoutManager(linearLayout);
-//        // Configure the refreshing colors
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
-//        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayout) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount) {
-//                if (tweetArrayList.size() > 0) {
-//                    maxId = tweetArrayList.get(tweetArrayList.size() - 1).getUid();
-//                }
-//                Log.d(TAG, "onLoadMore: " + String.valueOf(page));
-//                getMoreData(maxId, totalItemsCount);
-//            }
-//        });
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getDefaultTimeline();
-//            }
-//        });
-//        getDefaultTimeline();
-//        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-//                Intent i = new Intent(getActivity(), ComposeActivity.class);
-//                startActivityForResult(i, CREATE_TWEET_CODE);
-//            }
-//        });
-//        return view;
-//    }
-
     public static HomeTimeLineFragment newInstance(String screenName) {
         HomeTimeLineFragment homeTimeLineFragment = new HomeTimeLineFragment();
         Bundle bundle = new Bundle();
