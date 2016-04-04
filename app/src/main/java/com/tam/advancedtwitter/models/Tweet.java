@@ -8,9 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by toan on 3/27/2016.
- */
 public class Tweet {
     private String body;
     private long uid;

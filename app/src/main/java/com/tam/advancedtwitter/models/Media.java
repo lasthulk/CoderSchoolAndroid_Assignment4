@@ -3,9 +3,6 @@ package com.tam.advancedtwitter.models;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * Created by toan on 4/3/2016.
- */
 public class Media {
     private String thumbnailImage;
     private String videoUrl;

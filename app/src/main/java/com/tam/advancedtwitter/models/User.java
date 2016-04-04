@@ -4,9 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
-/**
- * Created by toan on 3/27/2016.
- */
+
 @Parcel
 public class User {
 

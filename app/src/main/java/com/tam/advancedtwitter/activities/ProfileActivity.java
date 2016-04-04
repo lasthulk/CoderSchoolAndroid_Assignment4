@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d("getCurrentUser", "onFailure: " + responseString);
             }
         });
-        screenName = user.getScreenName();
+        //screenName = user.getScreenName();
         if (savedInstanceState != null) {
             UserTimeLineFragment userFragment = UserTimeLineFragment.newInstance(screenName);
             // display a user fragment within a activity dynamically

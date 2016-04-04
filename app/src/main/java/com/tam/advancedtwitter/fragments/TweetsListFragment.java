@@ -1,9 +1,7 @@
 package com.tam.advancedtwitter.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,18 +14,15 @@ import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.tam.advancedtwitter.activities.ComposeActivity;
 import com.tam.advancedtwitter.adapters.TweetsAdapter;
 import com.tam.advancedtwitter.helpers.NetworkHelper;
 import com.tam.advancedtwitter.listeners.EndlessRecyclerViewScrollListener;
 import com.tam.advancedtwitter.models.Tweet;
-import com.tam.advancedtwitter.models.User;
 import com.tam.advancedtwitter.network.TwitterApplication;
 import com.tam.advancedtwitter.network.TwitterClient;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -44,8 +39,7 @@ public abstract class TweetsListFragment extends Fragment {
     RecyclerView rvTweets;
     @Bind(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.bnOpenCompose)
-    FloatingActionButton bnOpenCompose;
+
 
     protected String TAG = TweetsListFragment.class.getSimpleName();
     protected ArrayList<Tweet> tweetArrayList = new ArrayList<>();
@@ -53,6 +47,8 @@ public abstract class TweetsListFragment extends Fragment {
     protected ArrayList<Tweet> newTweets;
     protected TweetsAdapter tweetsAdapter;
 
+    protected JsonHttpResponseHandler fetchTweets;
+    protected JsonHttpResponseHandler fetchMoreTweets;
 
     public void postNewTweet(final Tweet newTweet) {
         if (!NetworkHelper.isOnline()) {
@@ -93,6 +89,24 @@ public abstract class TweetsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.client = TwitterApplication.getRestClient();
+
+//        this.fetchTweets = new JsonHttpResponseHandler() {
+//
+//        };
+//
+//        this.fetchMoreTweets = new JsonHttpResponseHandler() {
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                newTweets = Tweet.fromJSONArray(response);
+//                tweetsAdapter.addAll(newTweets);
+//                swipeContainer.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                Log.d(TAG, "onFailure: " + errorResponse.toString());
+//            }
+//        };
     }
 
     @Override
@@ -101,12 +115,19 @@ public abstract class TweetsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
         ButterKnife.bind(this, view);
+        linearLayout = new LinearLayoutManager(getActivity());
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         rvTweets.setItemAnimator(new SlideInUpAnimator());
         tweetsAdapter = new TweetsAdapter(tweetArrayList);
         rvTweets.setAdapter(tweetsAdapter);
-        this.client = TwitterApplication.getRestClient();
 
-        linearLayout = new LinearLayoutManager(getActivity());
+
+
         linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayout.scrollToPosition(0);
         rvTweets.setLayoutManager(linearLayout);
@@ -131,36 +152,37 @@ public abstract class TweetsListFragment extends Fragment {
                 getDefaultTimeline();
             }
         });
-        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
-                        @Override
-            public void onClick(View view) {
-                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-                Intent i = new Intent(getActivity(), ComposeActivity.class);
-                startActivityForResult(i, CREATE_TWEET_CODE);
-            }
-        });
+//        bnOpenCompose.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//            public void onClick(View view) {
+//                //Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+//                Intent i = new Intent(getActivity(), ComposeActivity.class);
+//                startActivityForResult(i, CREATE_TWEET_CODE);
+//            }
+//        });
         getDefaultTimeline();
-        return view;
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_TWEET_CODE && resultCode == Activity.RESULT_OK) {
-            User user = (User) Parcels.unwrap(data.getParcelableExtra("user"));
-            String tweetContent = data.getStringExtra("tweetConent");
-            final Tweet newTweet = new Tweet();
-            newTweet.setUser(user);
-            newTweet.setBody(tweetContent);
-            postNewTweet(newTweet);
-        }
-    }
+    //    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CREATE_TWEET_CODE && resultCode == Activity.RESULT_OK) {
+//            User user = (User) Parcels.unwrap(data.getParcelableExtra("user"));
+//            String tweetContent = data.getStringExtra("tweetConent");
+//            final Tweet newTweet = new Tweet();
+//            newTweet.setUser(user);
+//            newTweet.setBody(tweetContent);
+//            postNewTweet(newTweet);
+//        }
+//    }
 
 
     public abstract void getMoreData(long maxId, int totalItemsCount);
 
     public void getDefaultTimeline() {
         this.maxId = 0;
+        tweetsAdapter.clear();
+        tweetArrayList.clear();
+        tweetsAdapter.notifyDataSetChanged();
         getMoreData(0, 25);
     }
 }

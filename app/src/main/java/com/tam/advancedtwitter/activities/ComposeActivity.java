@@ -64,7 +64,7 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initComponents();
-        fetchUser();
+        getUser();
         initEvents();
     }
 
@@ -122,19 +122,23 @@ public class ComposeActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchUser() {
-        client.getCurrentUser(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                currentUser = User.fromJson(response);
-                displayUserInfo();
-            }
+    private void getUser() {
+        Intent data = getIntent();
+//        currentUser = (User) Parcels.unwrap(data.getParcelableExtra("user"));
+        if (currentUser == null) {
+            client.getCurrentUser(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    currentUser = User.fromJson(response);
+                    displayUserInfo();
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d(TAG, "onFailure: " + errorResponse.toString());
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.d(TAG, "onFailure: " + errorResponse.toString());
+                }
+            });
+        }
     }
 
     private void displayUserInfo() {

@@ -2,9 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/miComposeTweet"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_pencil_white_24dp"
+        android:title="Compose status"
+        android:onClick="onOpenComposeView" />
+    <item
         android:id="@+id/miProfile"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_account_white_24dp"
         android:title="Profile"
         android:onClick="onProfileView" />
 </menu>

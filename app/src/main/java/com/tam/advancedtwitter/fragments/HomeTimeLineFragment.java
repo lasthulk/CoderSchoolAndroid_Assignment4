@@ -2,9 +2,6 @@ package com.tam.advancedtwitter.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,20 +12,16 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import butterknife.ButterKnife;
 
-/**
- * Created by toan on 4/3/2016.
- */
 public class HomeTimeLineFragment extends TweetsListFragment {
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, view);
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        //View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
+//        View view = super.onCreateView(inflater, container, savedInstanceState);
+//        ButterKnife.bind(this, view);
 //        rvTweets.setItemAnimator(new SlideInUpAnimator());
 //        tweetsAdapter = new TweetsAdapter(tweetArrayList);
 //        rvTweets.setAdapter(tweetsAdapter);
@@ -68,7 +61,15 @@ public class HomeTimeLineFragment extends TweetsListFragment {
 //                startActivityForResult(i, CREATE_TWEET_CODE);
 //            }
 //        });
-        return view;
+//        return view;
+//    }
+
+    public static HomeTimeLineFragment newInstance(String screenName) {
+        HomeTimeLineFragment homeTimeLineFragment = new HomeTimeLineFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("screen_name", screenName);
+        homeTimeLineFragment.setArguments(bundle);
+        return homeTimeLineFragment;
     }
 
     @Override
@@ -86,12 +87,8 @@ public class HomeTimeLineFragment extends TweetsListFragment {
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     Log.d(TAG, "onSuccess: " + response.toString());
                     newTweets = Tweet.fromJSONArray(response);
-//                    tweetArrayList.addAll(newTweets);//
-//                    int currentSize = tweetsAdapter.getItemCount();
-//                    tweetsAdapter.notifyItemRangeInserted(currentSize, newTweets.size() - 1);
                     Log.d(TAG, "count list: " + String.valueOf(tweetArrayList.size()));
                     tweetsAdapter.addAll(newTweets);
-                    //tweetsListFragment.addAll(newTweets);
                     swipeContainer.setRefreshing(false);
                 }
 

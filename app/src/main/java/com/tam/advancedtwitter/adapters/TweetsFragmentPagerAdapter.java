@@ -2,15 +2,12 @@ package com.tam.advancedtwitter.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tam.advancedtwitter.fragments.HomeTimeLineFragment;
 import com.tam.advancedtwitter.fragments.MentionsTimeLineFragment;
 
-/**
- * Created by toan on 4/3/2016.
- */
-public class TweetsFragmentPagerAdapter extends FragmentPagerAdapter {
+
+public class TweetsFragmentPagerAdapter extends SmartFragmentStatePagerAdapter { //FragmentPagerAdapter {
 
     private String tabTitles[] = { "Home", "Mentions" };
 
@@ -21,12 +18,14 @@ public class TweetsFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new HomeTimeLineFragment();
+            //return new HomeTimeLineFragment();
+            return HomeTimeLineFragment.newInstance("");
         } else if (position == 1) {
-            return new MentionsTimeLineFragment();
+            return MentionsTimeLineFragment.newInstance("");
         }
         return null;
     }
+
 
     @Override
     public CharSequence getPageTitle(int position) {

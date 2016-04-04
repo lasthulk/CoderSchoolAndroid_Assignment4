@@ -31,5 +31,4 @@
         <!--app:backgroundTint="@color/blueTwitter"-->
         <!--android:src="@drawable/ic_plus_white_36dp" />-->
 
-
 </android.support.design.widget.CoordinatorLayout>

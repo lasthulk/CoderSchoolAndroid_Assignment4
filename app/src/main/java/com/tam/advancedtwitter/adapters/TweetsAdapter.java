@@ -19,9 +19,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by toan on 3/27/2016.
- */
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewHolder> {
 
     public static class TweetViewHolder extends RecyclerView.ViewHolder {
@@ -80,10 +77,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.TweetViewH
 
             String thumbmail = media.getThumbnailImage();
             if (!thumbmail.isEmpty()) {
+                holder.ivThumbnailImage.setVisibility(View.VISIBLE);
                 Glide.with(context).load(thumbmail)
                         .fitCenter()
                         .into(holder.ivThumbnailImage);
+            } else {
+                holder.ivThumbnailImage.setVisibility(View.GONE);
             }
+        } else {
+            holder.ivThumbnailImage.setVisibility(View.GONE);
         }
     }
 

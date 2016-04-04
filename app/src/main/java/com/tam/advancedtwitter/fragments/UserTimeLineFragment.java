@@ -2,9 +2,6 @@ package com.tam.advancedtwitter.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,20 +12,17 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * Created by toan on 4/3/2016.
- */
 public class UserTimeLineFragment extends TweetsListFragment {
 
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View view = super.onCreateView(inflater, container, savedInstanceState);
-//        ButterKnife.bind(this, view);
-//        return view;
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+////        View view = super.onCreateView(inflater, container, savedInstanceState);
+////        ButterKnife.bind(this, view);
+////        return view;
+//        return super.onCreateView(inflater, container, savedInstanceState);
+//    }
 
     public static UserTimeLineFragment newInstance(String screenName) {
         UserTimeLineFragment userFragment = new UserTimeLineFragment();
